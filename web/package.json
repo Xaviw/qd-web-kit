@@ -1,0 +1,29 @@
+{
+  "name": "@qd/web",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "WEB 开发模板",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@qd/design": "workspace:^",
+    "@qd/utils": "workspace:^",
+    "@vueuse/core": "catalog:",
+    "naive-ui": "catalog:",
+    "vue": "catalog:",
+    "vue-router": "^4.5.0"
+  },
+  "devDependencies": {
+    "@iconify-json/carbon": "catalog:",
+    "@vitejs/plugin-vue": "catalog:",
+    "@vitejs/plugin-vue-jsx": "catalog:",
+    "unocss": "catalog:",
+    "unplugin-auto-import": "^0.18.6",
+    "unplugin-iconify-generator": "^0.7.3",
+    "unplugin-vue-components": "^0.27.5",
+    "vite": "catalog:"
+  }
+}

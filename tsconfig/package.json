@@ -1,0 +1,14 @@
+{
+  "name": "@qd/tsconfig",
+  "version": "1.0.0",
+  "description": "tsconfig.json 文件集合",
+  "files": [
+    "base.json",
+    "node.json",
+    "web.json"
+  ],
+  "peerDependencies": {
+    "@types/node": "catalog:",
+    "vite": "catalog:"
+  }
+}

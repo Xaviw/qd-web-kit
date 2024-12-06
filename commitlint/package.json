@@ -1,0 +1,12 @@
+{
+  "name": "@qd/commitlint",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "commitlint 配置",
+  "main": "src/index.js",
+  "peerDependencies": {
+    "@commitlint/cli": "catalog:",
+    "@commitlint/config-conventional": "catalog:",
+    "czg": "catalog:"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "@qd/lint",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "eslint 配置",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "scripts": {
+    "build": "vite build"
+  },
+  "peerDependencies": {
+    "@prettier/plugin-xml": "catalog:",
+    "@unocss/eslint-plugin": "catalog:",
+    "eslint": "catalog:",
+    "eslint-plugin-format": "catalog:"
+  },
+  "dependencies": {
+    "@antfu/eslint-config": "catalog:"
+  },
+  "devDependencies": {
+    "eslint-flat-config-utils": "*"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "name": "@qd/utils",
+  "type": "module",
+  "version": "1.0.0",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "vite build"
+  },
+  "peerDependencies": {
+    "@qd/design": "workspace:^",
+    "@vueuse/core": "catalog:",
+    "naive-ui": "catalog:",
+    "vue": "catalog:"
+  },
+  "devDependencies": {
+    "@qd/design": "workspace:^",
+    "@vueuse/core": "catalog:",
+    "naive-ui": "catalog:",
+    "vite": "catalog:",
+    "vue": "catalog:"
+  }
+}

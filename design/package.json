@@ -1,0 +1,44 @@
+{
+  "name": "@qd/design",
+  "type": "module",
+  "version": "1.0.0",
+  "exports": {
+    ".": {
+      "types": "./dist/src/web.d.ts",
+      "import": "./dist/web.mjs"
+    },
+    "./helpers": {
+      "types": "./dist/src/helpers.d.ts",
+      "import": "./dist/helpers.mjs"
+    },
+    "./css": {
+      "default": "./dist/style.css"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "vite build"
+  },
+  "peerDependencies": {
+    "@iconify/tools": "catalog:",
+    "@iconify/utils": "catalog:",
+    "postcss": "catalog:",
+    "tiny-glob": "^0.2.9",
+    "unocss": "catalog:"
+  },
+  "dependencies": {
+    "@ctrl/tinycolor": "catalog:",
+    "@iconify/tools": "catalog:",
+    "@iconify/utils": "catalog:",
+    "jsonc-parser": "^3.3.1",
+    "postcss": "catalog:",
+    "theme-colors": "catalog:"
+  },
+  "devDependencies": {
+    "tiny-glob": "^0.2.9",
+    "unocss": "catalog:",
+    "vite": "catalog:"
+  }
+}

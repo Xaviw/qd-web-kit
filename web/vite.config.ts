@@ -1,7 +1,6 @@
 import Vue from '@vitejs/plugin-vue'
 import VueJsx from '@vitejs/plugin-vue-jsx'
 import UnoCSS from 'unocss/vite'
-import IconifyGenerator from 'unplugin-iconify-generator/vite'
 // import AutoImport from 'unplugin-auto-import/vite'
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 import Components from 'unplugin-vue-components/vite'
@@ -12,13 +11,6 @@ export default defineConfig({
     Vue(),
     VueJsx(),
     UnoCSS(),
-    IconifyGenerator({
-      collections: {
-        qd: './src/assets/svg',
-      },
-      iconifyIntelliSense: true,
-      cwd: './web',
-    }),
     // AutoImport({
     //   imports: [
     //     'vue',
@@ -34,6 +26,7 @@ export default defineConfig({
     // }),
     Components({
       resolvers: [NaiveUiResolver()],
+      dts: 'types/components.d.ts',
     }),
   ],
 })

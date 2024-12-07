@@ -1,6 +1,6 @@
 import type { CustomIconLoader } from '@iconify/utils'
 import type { IconsOptions } from 'unocss/preset-icons'
-import { existsSync, promises as fs, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join, relative, resolve } from 'node:path'
 import { cwd } from 'node:process'
 import { cleanupSVG, runSVGO, SVG } from '@iconify/tools'
@@ -94,7 +94,7 @@ function FileSystemIconLoader(
     const path = filePaths.find(item => item.endsWith(`${name}.svg`))
 
     if (path) {
-      const svg = await fs.readFile(path, 'utf-8')
+      const svg = readFileSync(path, 'utf-8')
       const optimizedSvg = tramsformSvg(svg)
       return optimizedSvg
     }
@@ -121,9 +121,9 @@ function tramsformSvg(svg: string) {
  */
 function genIconifyJson(collectionName: string, paths: string[], options: GlobOptions = {}) {
   // 检查 node_modules/.vite 目录
-  const viteIconDir = join(cwd(), 'node_modules', '.vite')
-  if (!existsSync(viteIconDir)) {
-    mkdirSync(viteIconDir, { recursive: true })
+  const targetDir = join(cwd(), 'node_modules', '.vite')
+  if (!existsSync(targetDir)) {
+    mkdirSync(targetDir, { recursive: true })
   }
 
   // 构建预览配置
@@ -138,7 +138,7 @@ function genIconifyJson(collectionName: string, paths: string[], options: GlobOp
     }
   }, {})
 
-  const iconJsonPath = join(viteIconDir, `${collectionName}.json`)
+  const iconJsonPath = join(targetDir, `${collectionName}.json`)
 
   writeFileSync(iconJsonPath, JSON.stringify({
     prefix: collectionName,

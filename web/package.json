@@ -22,7 +22,6 @@
     "@vitejs/plugin-vue-jsx": "catalog:",
     "unocss": "catalog:",
     "unplugin-auto-import": "catalog:",
-    "unplugin-iconify-generator": "catalog:",
     "unplugin-vue-components": "catalog:",
     "vite": "catalog:"
   }

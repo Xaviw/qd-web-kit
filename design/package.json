@@ -25,7 +25,7 @@
     "@iconify/tools": "catalog:",
     "@iconify/utils": "catalog:",
     "postcss": "catalog:",
-    "tiny-glob": "^0.2.9",
+    "tiny-glob": "catalog:",
     "unocss": "catalog:"
   },
   "dependencies": {

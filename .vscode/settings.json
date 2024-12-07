@@ -51,5 +51,8 @@
     "Customizer",
     "tsbuildinfo",
     "tsup"
+  ],
+  "iconify.customCollectionJsonPaths": [
+    "/home/xavi/company/qd-web-kit/web/node_modules/.vite/qd.json"
   ]
 }

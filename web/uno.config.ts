@@ -12,7 +12,9 @@ export default defineConfig({
     uno(),
     icons({
       ...iconsPresetConfig(
-        [{ name: 'qd', glob: 'src/assets/**/*.svg' }],
+        [
+          { name: 'qd', glob: 'public/**/*.svg' },
+        ],
         { editorSettingsPath: '../.vscode/settings.json' },
       ),
       warn: true,

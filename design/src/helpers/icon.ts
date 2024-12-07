@@ -1,9 +1,10 @@
 import type { CustomIconLoader } from '@iconify/utils'
 import type { IconsOptions } from 'unocss/preset-icons'
 import { existsSync, promises as fs, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
-import { join } from 'node:path'
+import { join, resolve } from 'node:path'
 import { cwd } from 'node:process'
 import { cleanupSVG, runSVGO, SVG } from '@iconify/tools'
+import { applyEdits, type EditResult, modify, parse } from 'jsonc-parser'
 import glob from 'tiny-glob'
 
 export interface CustomCollectionOptions {
@@ -65,7 +66,7 @@ export function iconsPresetConfig(collectionsArray: CustomCollectionOptions[] = 
 }
 
 /**
- * 返回图标 CustomIconLoader，并生成预览 JSON
+ * 图标 CustomIconLoader
  */
 function FileSystemIconLoader(
   name: string,
@@ -115,7 +116,7 @@ function tramsformSvg(svg: string) {
 }
 
 /**
- * 生成 Iconify IntelliSense 插件支持的预览 JSON
+ * 生成 Iconify IntelliSense 插件支持的预览 JSON，并更新编辑器配置文件
  * @param collectionName 图标集前缀
  * @param editorSettingsPath 编辑器配置文件路径
  * @param paths 全部图标路径
@@ -147,29 +148,44 @@ function genIconifyJson(collectionName: string, editorSettingsPath: string, path
     height: '1em',
   }))
 
-  // const editorSettingsDir = join(cwd(), editorSettingsPath)
-  // if (existsSync(editorSettingsDir)) {
-  // const packageIndex = customCollectionJsonPaths?.children?.findIndex(
-  //   child => findNodeAtLocation(child, ['value', 'name']).value === packageName,
-  // )
-  // if (packageIndex !== -1) {
-  //   const packageNode = subpackagesNode.children[packageIndex]
-  //   const edits = modify(jsonStr, packageNode.offset, packageNode.length, JSON.stringify(packageData))
-  //   return applyEdits(jsonStr, edits)
-  // }
-  // else {
-  //   const edits = modify(jsonStr, subpackagesNode.offset + subpackagesNode.length - 1, 0, `,${JSON.stringify(packageData)}`)
-  //   return applyEdits(jsonStr, edits)
-  // }
+  const editorSettingsDir = join(cwd(), editorSettingsPath)
+  if (existsSync(editorSettingsDir)) {
+    const text = readFileSync(editorSettingsDir, 'utf-8')
 
-  // const customCollectionJsonPaths = settingString['iconify.customCollectionJsonPaths'] || []
+    const setting = parse(text)
+    const paths = setting['iconify.customCollectionJsonPaths']
 
-  // if (!customCollectionJsonPaths.includes(iconJsonPath)) {
-  //   customCollectionJsonPaths.push(iconJsonPath)
-  // }
+    let editResult: EditResult
 
-  // settingString['iconify.customCollectionJsonPaths'] = customCollectionJsonPaths
+    if (Array.isArray(paths) && !paths.includes(iconJsonPath)) {
+      editResult = modify(text, ['iconify.customCollectionJsonPaths', 0], iconJsonPath, {
+        isArrayInsertion: true,
+        formattingOptions: {
+          insertSpaces: true,
+          tabSize: 2,
+        },
+      })
+    }
+    else {
+      editResult = modify(text, ['iconify.customCollectionJsonPaths'], [iconJsonPath], {
+        formattingOptions: {
+          insertSpaces: true,
+          tabSize: 2,
+        },
+      })
+    }
 
-  // writeFileSync(editorSettingsDir, JSON.stringify(settingString, null, 2))
-  // }
+    const resultText = applyEdits(text, editResult)
+    writeFileSync(editorSettingsDir, resultText)
+  }
+  else {
+    const settingsFolder = resolve(editorSettingsDir, '../')
+    if (!existsSync(settingsFolder)) {
+      mkdirSync(settingsFolder, { recursive: true })
+    }
+
+    writeFileSync(editorSettingsDir, `${JSON.stringify({
+      'iconify.customCollectionJsonPaths': [iconJsonPath],
+    }, null, 2)}\n`)
+  }
 }

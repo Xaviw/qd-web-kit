@@ -1,7 +1,7 @@
 {
   "name": "@qd/lint",
   "type": "module",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "eslint 配置",
   "exports": {
     ".": {
@@ -22,6 +22,6 @@
     "@antfu/eslint-config": "catalog:"
   },
   "devDependencies": {
-    "eslint-flat-config-utils": "*"
+    "eslint-flat-config-utils": "catalog:"
   }
 }

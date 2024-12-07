@@ -1,6 +1,6 @@
 {
   "name": "@qd/tsconfig",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "tsconfig.json 文件集合",
   "files": [
     "base.json",

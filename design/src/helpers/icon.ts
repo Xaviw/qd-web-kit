@@ -1,7 +1,7 @@
 import type { CustomIconLoader } from '@iconify/utils'
 import type { IconsOptions } from 'unocss/preset-icons'
 import { existsSync, promises as fs, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
-import { join, resolve } from 'node:path'
+import { join, relative, resolve } from 'node:path'
 import { cwd } from 'node:process'
 import { cleanupSVG, runSVGO, SVG } from '@iconify/tools'
 import { applyEdits, type EditResult, modify, parse } from 'jsonc-parser'
@@ -85,9 +85,7 @@ function FileSystemIconLoader(
     filesOnly: true,
   }).then((paths) => {
     filePaths = paths
-
-    const editorSettingsPath = options.editorSettingsPath || '.vscode/settings.json'
-    genIconifyJson(name, editorSettingsPath, paths)
+    genIconifyJson(name, paths, options)
   })
 
   return async (name) => {
@@ -118,16 +116,17 @@ function tramsformSvg(svg: string) {
 /**
  * 生成 Iconify IntelliSense 插件支持的预览 JSON，并更新编辑器配置文件
  * @param collectionName 图标集前缀
- * @param editorSettingsPath 编辑器配置文件路径
  * @param paths 全部图标路径
+ * @param options
  */
-function genIconifyJson(collectionName: string, editorSettingsPath: string, paths: string[]) {
-  // 检查并创建 node_modules/.vite 目录
+function genIconifyJson(collectionName: string, paths: string[], options: GlobOptions = {}) {
+  // 检查 node_modules/.vite 目录
   const viteIconDir = join(cwd(), 'node_modules', '.vite')
   if (!existsSync(viteIconDir)) {
     mkdirSync(viteIconDir, { recursive: true })
   }
 
+  // 构建预览配置
   const icons = paths.reduce((p, c) => {
     const name = c.split('/').pop()!.replace('.svg', '')
     const svg = readFileSync(c, 'utf-8')
@@ -148,7 +147,14 @@ function genIconifyJson(collectionName: string, editorSettingsPath: string, path
     height: '1em',
   }))
 
-  const editorSettingsDir = join(cwd(), editorSettingsPath)
+  const editorSettingsPath = options.editorSettingsPath || '.vscode/settings.json'
+  const originPath = options.cwd || cwd()
+  // 编辑器配置文件绝对路径
+  const editorSettingsDir = join(originPath, editorSettingsPath)
+  // 配置存放路径与编辑器配置文件夹的相对路径
+  // .vscode 与 node_modules/.vite/ 的相对路径
+  const relativeDir = relative(join(editorSettingsDir, '../../'), iconJsonPath)
+
   if (existsSync(editorSettingsDir)) {
     const text = readFileSync(editorSettingsDir, 'utf-8')
 
@@ -157,8 +163,9 @@ function genIconifyJson(collectionName: string, editorSettingsPath: string, path
 
     let editResult: EditResult
 
-    if (Array.isArray(paths) && !paths.includes(iconJsonPath)) {
-      editResult = modify(text, ['iconify.customCollectionJsonPaths', 0], iconJsonPath, {
+    // 存在配置，unshift
+    if (Array.isArray(paths) && !paths.includes(relativeDir)) {
+      editResult = modify(text, ['iconify.customCollectionJsonPaths', 0], relativeDir, {
         isArrayInsertion: true,
         formattingOptions: {
           insertSpaces: true,
@@ -166,8 +173,9 @@ function genIconifyJson(collectionName: string, editorSettingsPath: string, path
         },
       })
     }
+    // 不存在配置，直接写入
     else {
-      editResult = modify(text, ['iconify.customCollectionJsonPaths'], [iconJsonPath], {
+      editResult = modify(text, ['iconify.customCollectionJsonPaths'], [relativeDir], {
         formattingOptions: {
           insertSpaces: true,
           tabSize: 2,
@@ -178,6 +186,7 @@ function genIconifyJson(collectionName: string, editorSettingsPath: string, path
     const resultText = applyEdits(text, editResult)
     writeFileSync(editorSettingsDir, resultText)
   }
+  // 不存在配置文件，新建并写入
   else {
     const settingsFolder = resolve(editorSettingsDir, '../')
     if (!existsSync(settingsFolder)) {
@@ -185,7 +194,7 @@ function genIconifyJson(collectionName: string, editorSettingsPath: string, path
     }
 
     writeFileSync(editorSettingsDir, `${JSON.stringify({
-      'iconify.customCollectionJsonPaths': [iconJsonPath],
+      'iconify.customCollectionJsonPaths': [relativeDir],
     }, null, 2)}\n`)
   }
 }

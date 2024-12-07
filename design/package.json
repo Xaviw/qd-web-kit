@@ -1,7 +1,7 @@
 {
   "name": "@qd/design",
   "type": "module",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "exports": {
     ".": {
       "types": "./dist/src/web.d.ts",
@@ -32,12 +32,12 @@
     "@ctrl/tinycolor": "catalog:",
     "@iconify/tools": "catalog:",
     "@iconify/utils": "catalog:",
-    "jsonc-parser": "^3.3.1",
+    "jsonc-parser": "catalog:",
     "postcss": "catalog:",
     "theme-colors": "catalog:"
   },
   "devDependencies": {
-    "tiny-glob": "^0.2.9",
+    "tiny-glob": "catalog:",
     "unocss": "catalog:",
     "vite": "catalog:"
   }

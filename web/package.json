@@ -1,7 +1,7 @@
 {
   "name": "@qd/web",
   "type": "module",
-  "version": "1.0.0",
+  "version": "0.1.1",
   "description": "WEB 开发模板",
   "main": "index.js",
   "scripts": {
@@ -14,16 +14,16 @@
     "@vueuse/core": "catalog:",
     "naive-ui": "catalog:",
     "vue": "catalog:",
-    "vue-router": "^4.5.0"
+    "vue-router": "catalog:"
   },
   "devDependencies": {
     "@iconify-json/carbon": "catalog:",
     "@vitejs/plugin-vue": "catalog:",
     "@vitejs/plugin-vue-jsx": "catalog:",
     "unocss": "catalog:",
-    "unplugin-auto-import": "^0.18.6",
-    "unplugin-iconify-generator": "^0.7.3",
-    "unplugin-vue-components": "^0.27.5",
+    "unplugin-auto-import": "catalog:",
+    "unplugin-iconify-generator": "catalog:",
+    "unplugin-vue-components": "catalog:",
     "vite": "catalog:"
   }
 }

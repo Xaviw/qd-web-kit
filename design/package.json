@@ -37,6 +37,7 @@
     "theme-colors": "catalog:"
   },
   "devDependencies": {
+    "naive-ui": "^2.40.3",
     "tiny-glob": "catalog:",
     "unocss": "catalog:",
     "vite": "catalog:"

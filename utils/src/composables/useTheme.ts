@@ -12,6 +12,8 @@ interface UseThemeColorModeOptions<T extends string> {
   onChanged?: (mode: T) => void
 }
 
+const changeHandlers: ((mode: any) => void)[] = []
+
 /** 获取与切换主题明暗、颜色 */
 export function useTheme<T extends string = DefaultThemeColorModes>(
   storageKeyPrefix = 'qd',
@@ -27,6 +29,11 @@ export function useTheme<T extends string = DefaultThemeColorModes>(
   const initialValue = 'initialValue' in useColorModeOptions
     ? useColorModeOptions.initialValue
     : 'default' as any
+
+  const onChanged = useColorModeOptions.onChanged
+  if (typeof onChanged === 'function' && !changeHandlers.includes(onChanged)) {
+    changeHandlers.push(onChanged)
+  }
 
   // 避免重复执行
   const previousMode = ref<T | BasicColorMode>()
@@ -44,12 +51,30 @@ export function useTheme<T extends string = DefaultThemeColorModes>(
       previousMode.value = mode
 
       defaultHandler(mode)
-      useColorModeOptions.onChanged?.(mode as T)
+
+      changeHandlers.forEach((fn) => {
+        fn(mode)
+      })
     },
   })
 
   /** 是否是暗色模式 */
-  const isDark = useDark({ storageKey: `${storageKeyPrefix}-light-or-dark` })
+  const isDark = useDark({
+    storageKey: `${storageKeyPrefix}-light-or-dark`,
+    onChanged(isDark, defaultHandler) {
+      const mode = isDark ? 'dark' : 'light'
+      if (previousMode.value === mode) {
+        return
+      }
+      previousMode.value = mode
+
+      defaultHandler(mode)
+
+      changeHandlers.forEach((fn) => {
+        fn(mode)
+      })
+    },
+  })
 
   /** 切换明暗模式的方法 */
   const toggleLightOrDark = useToggle(isDark)

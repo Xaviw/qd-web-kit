@@ -17,7 +17,7 @@
     "vue-router": "catalog:"
   },
   "devDependencies": {
-    "@iconify-json/carbon": "catalog:",
+    "@iconify-json/tdesign": "^1.2.6",
     "@vitejs/plugin-vue": "catalog:",
     "@vitejs/plugin-vue-jsx": "catalog:",
     "unocss": "catalog:",

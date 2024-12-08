@@ -1,6 +1,7 @@
+import type { GlobalThemeOverrides } from 'naive-ui'
 import { TinyColor } from '@ctrl/tinycolor'
 
-export function useNaiveDesignTokens() {
+export function useNaiveDesignTokens(): GlobalThemeOverrides['common'] {
   const rootStyles = getComputedStyle(document.documentElement)
 
   const getCssVariableValue = (variable: string, isColor: boolean = true) => {

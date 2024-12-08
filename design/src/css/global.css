@@ -19,29 +19,16 @@
     scroll-behavior: smooth;
     text-rendering: optimizelegibility;
     -webkit-tap-highlight-color: transparent;
-
-    /* -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale; */
   }
 
   #app,
   body,
   html {
     --uno: size-full;
-
-    /* scrollbar-gutter: stable; */
   }
 
   body {
     min-height: 100vh;
-
-    /* pointer-events: auto !important; */
-
-    /* overflow: overlay; */
-
-    /* -webkit-font-smoothing: antialiased; */
-
-    /* -moz-osx-font-smoothing: grayscale; */
   }
 
   a,
@@ -52,37 +39,10 @@
     --uno: no-underline;
   }
 
-  ::view-transition-new(root),
-  ::view-transition-old(root) {
-    --uno: animate-none mix-blend-normal;
-  }
-
-  ::view-transition-old(root) {
-    --uno: z-[1];
-  }
-
-  ::view-transition-new(root) {
-    --uno: z-[2147483646];
-  }
-
-  html.dark::view-transition-old(root) {
-    --uno: z-[2147483646];
-  }
-
-  html.dark::view-transition-new(root) {
-    --uno: z-[1];
-  }
-
   input::placeholder,
   textarea::placeholder {
     --uno: opacity-100;
   }
-
-  /* input:-webkit-autofill {
-    --uno: border-none;
-
-    box-shadow: 0 0 0 1000px transparent inset;
-  } */
 
   input[type='number']::-webkit-inner-spin-button,
   input[type='number']::-webkit-outer-spin-button {
@@ -106,45 +66,6 @@
     ::-webkit-scrollbar-button {
       --uno: hidden;
     }
-  }
-}
-
-@layer components {
-  .flex-center {
-    --uno: flex items-center justify-center;
-  }
-
-  .flex-col-center {
-    --uno: flex flex-col items-center justify-center;
-  }
-
-  .outline-box {
-    --uno: outline-border relative cursor-pointer rounded-md p-1 outline outline-1;
-  }
-
-  .outline-box::after {
-    --uno: absolute left-1/2 top-1/2 z-20 h-0 w-[1px] rounded-sm opacity-0 outline outline-2 outline-transparent
-      transition-all duration-300 content-[ ''];
-  }
-
-  .outline-box.outline-box-active {
-    --uno: outline-primary outline outline-2;
-  }
-
-  .outline-box.outline-box-active::after {
-    display: none;
-  }
-
-  .outline-box:not(.outline-box-active):hover::after {
-    --uno: outline-primary left-0 top-0 h-full w-full p-1 opacity-100;
-  }
-
-  .vben-link {
-    --uno: text-primary hover: text-primary-hover active: text-primary-active cursor-pointer;
-  }
-
-  .card-box {
-    --uno: bg-card text-card-foreground border-border rounded-xl border;
   }
 }
 

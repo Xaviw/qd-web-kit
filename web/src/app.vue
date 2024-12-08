@@ -14,6 +14,9 @@ import {
   zhCN,
 } from 'naive-ui'
 import { computed, ref } from 'vue'
+import { useRoute } from 'vue-router'
+import BasicLayout from './layouts/basic.vue'
+import EmptyLayout from './layouts/empty.vue'
 
 defineOptions({ name: 'App' })
 
@@ -29,6 +32,8 @@ const { isDark } = useTheme(undefined, {
 const theme = computed(() =>
   isDark.value ? darkTheme : lightTheme,
 )
+
+const route = useRoute()
 </script>
 
 <template>
@@ -41,7 +46,8 @@ const theme = computed(() =>
   >
     <NNotificationProvider>
       <NMessageProvider>
-        <RouterView />
+        <EmptyLayout v-if="route.meta.layout === 'empty'" />
+        <BasicLayout v-else />
       </NMessageProvider>
     </NNotificationProvider>
   </NConfigProvider>

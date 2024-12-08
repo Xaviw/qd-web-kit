@@ -114,39 +114,48 @@ export const themeConfig = () => ({
 function createColorsPalette(name: string) {
   return {
     // 最浅的背景色，适用于非常轻微的阴影或卡片的背景。
-    '50': `hsl(var(--${name}-50))`, // rgb(241, 247, 254)
-    'background-lightest': `hsl(var(--${name}-50))`,
+    50: `hsl(var(--${name}-50))`, // rgb(241, 247, 254)
 
     // 适用于略浅的背景色，通常用于次要背景或略浅的区域。
-    '100': `hsl(var(--${name}-100))`, // rgb(231, 241, 253)
-    'background-lighter': `hsl(var(--${name}-100))`,
+    100: `hsl(var(--${name}-100))`, // rgb(231, 241, 253)
 
     // 浅色背景，适用于输入框或表单区域的背景。
-    '200': `hsl(var(--${name}-200))`, // rgb(190, 217, 249)
-    'background-light': `hsl(var(--${name}-200))`,
+    200: `hsl(var(--${name}-200))`, // rgb(190, 217, 249)
 
     // 浅色边框，适用于输入框或卡片的边框。
-    '300': `hsl(var(--${name}-300))`, // rgb(153, 196, 245)
-    'border-light': `hsl(var(--${name}-300))`,
+    300: `hsl(var(--${name}-300))`, // rgb(153, 196, 245)
 
     // 适用于普通边框，可能用于按钮或卡片的边框。
-    '400': `hsl(var(--${name}-400))`, // rgb(78, 153, 239)
-    'border': `hsl(var(--${name}-400))`,
+    400: `hsl(var(--${name}-400))`, // rgb(78, 153, 239)
 
     // 主色文本
-    '500': `hsl(var(--${name}-500))`, // rgb(0, 107, 230)
-    'text': `hsl(var(--${name}-500))`,
+    500: `hsl(var(--${name}-500))`, // rgb(0, 107, 230)
 
     // 鼠标悬停状态下的颜色，适用于悬停时的背景色或边框色或文本色。
-    '600': `hsl(var(--${name}-600))`, // rgb(0, 98, 209)
-    'hover': `hsl(var(--${name}-600))`,
-    'text-hover': `hsl(var(--${name}-600))`,
+    600: `hsl(var(--${name}-600))`, // rgb(0, 98, 209)
 
     // 激活状态下的颜色，适用于按下时的背景色或边框色或文本色。
-    '700': `hsl(var(--${name}-700))`, // rgb(0, 64, 138)
-    'active': `hsl(var(--${name}-700))`,
-    'text-active': `hsl(var(--${name}-700))`,
+    700: `hsl(var(--${name}-700))`, // rgb(0, 64, 138)
 
-    'foreground': `hsl(var(--${name}-foreground))`,
+    hover: `hsl(var(--${name}-600))`,
+    active: `hsl(var(--${name}-700))`,
+    foreground: `hsl(var(--${name}-foreground))`,
+
+    text: {
+      hover: `hsl(var(--${name}-600))`,
+      active: `hsl(var(--${name}-700))`,
+      DEFAULT: `hsl(var(--${name}-500))`,
+    },
+
+    background: {
+      lightest: `hsl(var(--${name}-50))`,
+      lighter: `hsl(var(--${name}-100))`,
+      light: `hsl(var(--${name}-200))`,
+    },
+
+    border: {
+      light: `hsl(var(--${name}-300))`,
+      DEFAULT: `hsl(var(--${name}-400))`,
+    },
   }
 }

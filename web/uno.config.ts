@@ -6,6 +6,11 @@ import tagify from 'unocss/preset-tagify'
 import uno from 'unocss/preset-uno'
 
 export default defineConfig({
+  shortcuts: {
+    'flex-center': 'flex items-center justify-center',
+    'flex-col-center': 'flex flex-col items-center justify-center',
+    'card-box': 'bg-card text-card-foreground border-border rounded-xl border',
+  },
   presets: [
     uno(),
     icons({
